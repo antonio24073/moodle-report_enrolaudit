@@ -95,8 +95,20 @@ class enrolaudit {
      * @return string
      */
     public function get_fields_sql() {
-        $userfields = get_all_user_name_fields(true, 'u');
-        $modifierfields = get_all_user_name_fields(true, 'm', '', 'modifier');
+        $namefields = \core_user\fields::get_name_fields(true);
+
+        $userfields = [];
+        foreach ($namefields as $field) {
+            $userfields[] = "u.$field";
+        }
+        $userfields = implode(', ', $userfields);
+
+
+        $modifierfields = [];
+        foreach ($namefields as $field) {
+            $modifierfields[] = "m.$field";
+        }
+        $modifierfields = implode(', ', $modifierfields);
 
         return "
             re.id,
