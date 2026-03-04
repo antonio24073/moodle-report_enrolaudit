@@ -99,8 +99,9 @@ class report_table extends table_sql {
     public function col_modifierid($row) {
         $modifier = new \stdClass();
         $modifier->{$this->useridfield} = $row->modifierid;
+        $namefields = \core_user\fields::get_name_fields();
 
-        foreach (get_all_user_name_fields() as $namefield) {
+        foreach ($namefields as $namefield) {
             if (isset($row->{'modifier'.$namefield})) {
                 $modifier->$namefield = $row->{'modifier'.$namefield};
             } else {
